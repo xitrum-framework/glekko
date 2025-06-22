@@ -1,19 +1,19 @@
-package glokka
+package glekko
 
 import java.net.URLEncoder
 
 import scala.collection.immutable.SortedSet
 
-import akka.actor.{
+import org.apache.pekko.actor.{
   Actor, ActorRef, PoisonPill, Props, Stash,
   ActorSelection, RootActorPath, Identify, ActorIdentity
 }
-import akka.cluster.{Cluster, ClusterEvent, Member}
-import akka.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerSettings}
+import org.apache.pekko.cluster.{Cluster, ClusterEvent, Member}
+import org.apache.pekko.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerSettings}
 
 private object ClusterSingletonProxy {
   // This must be URL-escaped
-  val SINGLETON_NAME: String = URLEncoder.encode("GlokkaActorRegistry", "UTF-8")
+  val SINGLETON_NAME: String = URLEncoder.encode("GlekkoActorRegistry", "UTF-8")
 }
 
 private class ClusterSingletonProxy(proxyName: String) extends Actor with Stash {
@@ -90,7 +90,7 @@ private class ClusterSingletonProxy(proxyName: String) extends Actor with Stash 
   private def receiveClusterSingletonRegistryIdentity: Actor.Receive = {
     case ActorIdentity(_, Some(ref)) =>
       clusterSingletonRegistryRef = ref
-      context.become(receiveClusterEvents orElse receiveGlokkaEvents)
+      context.become(receiveClusterEvents orElse receiveGlekkoEvents)
       unstashAll()
 
     case ActorIdentity(_, None) =>
@@ -106,7 +106,7 @@ private class ClusterSingletonProxy(proxyName: String) extends Actor with Stash 
       // receiveClusterEvents
   }
 
-  private def receiveGlokkaEvents: Actor.Receive = {
+  private def receiveGlekkoEvents: Actor.Receive = {
     case Register(name, Left(props)) =>
       clusterSingletonRegistryRef ! LookupOrCreate(name)
       context.become(receiveClusterEvents orElse receiveLookupOrCreateResultByProps(sender(), name, props))
@@ -201,14 +201,14 @@ private class ClusterSingletonProxy(proxyName: String) extends Actor with Stash 
 
   private def replyAndDumpStash(requester: ActorRef, msg: Any): Unit = {
     requester ! msg
-    context.become(receiveClusterEvents orElse receiveGlokkaEvents)
+    context.become(receiveClusterEvents orElse receiveGlekkoEvents)
     unstashAll()
   }
 
   private def tellAndDumpStash(requester: ActorRef, target: ActorRef): Unit = {
     target.tell(tellMsg.get, requester)
     tellMsg = None
-    context.become(receiveClusterEvents orElse receiveGlokkaEvents)
+    context.become(receiveClusterEvents orElse receiveGlekkoEvents)
     unstashAll()
   }
 

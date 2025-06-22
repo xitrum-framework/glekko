@@ -1,8 +1,8 @@
-package glokka
+package glekko
 
 import scala.collection.mutable.{ArrayBuffer, HashMap => MHashMap, Set => MSet}
 import scala.concurrent.duration.{FiniteDuration, SECONDS}
-import akka.actor.{Actor, ActorRef, PoisonPill, Terminated}
+import org.apache.pekko.actor.{Actor, ActorRef, PoisonPill, Terminated}
 
 private object ClusterRegistry {
   case class LookupOrCreate(name: String, timeoutInSeconds: Int = 60)
@@ -12,7 +12,7 @@ private object ClusterSingletonRegistry {
   // Messages used by ClusterSingletonRegistry internally.
   // Using mutable data structures internally in actor is OK (for speed).
 
-  // Handle stash manually instead of using Akka's stash feature, because we want
+  // Handle stash manually instead of using Pekko's stash feature, because we want
   // to handle timeout per actor creation (per registry name)
   private case class StashMsg(msg: Any, requester: ActorRef)
 

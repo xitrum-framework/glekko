@@ -1,7 +1,7 @@
-package glokka
+package glekko
 
-import akka.actor.{ActorRef, ActorSystem, Props}
-import akka.event.Logging
+import org.apache.pekko.actor.{ActorRef, ActorSystem, Props}
+import org.apache.pekko.event.Logging
 import com.typesafe.config.ConfigFactory
 
 // Only things in this file are public and appear in the Scaladoc.
@@ -40,8 +40,8 @@ object Registry {
 
   val clusterMode: Boolean = {
     val config   = ConfigFactory.load()
-    val provider = config.getString("akka.actor.provider")
-    provider == "akka.cluster.ClusterActorRefProvider"
+    val provider = config.getString("pekko.actor.provider")
+    provider == "org.apache.pekko.cluster.ClusterActorRefProvider"
   }
 
   /** @return The registry actor */
@@ -57,12 +57,12 @@ object Registry {
 
     val log = Logging.getLogger(system, this)
     if (clusterMode) {
-      log.info(s"""Glokka actor registry "$proxyName" starts in cluster mode""")
+      log.info(s"""Glekko actor registry "$proxyName" starts in cluster mode""")
       system
         .actorOf(Props(classOf[ClusterSingletonProxy], proxyName)
-        .withMailbox("akka.actor.mailbox.unbounded-deque-based"))
+        .withMailbox("pekko.actor.mailbox.unbounded-deque-based"))
     } else {
-      log.info(s"""Glokka actor registry "$proxyName" starts in local mode""")
+      log.info(s"""Glekko actor registry "$proxyName" starts in local mode""")
       system.actorOf(Props(classOf[LocalRegistry]))
     }
   }

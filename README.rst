@@ -1,30 +1,30 @@
-Glokka = Global + Akka
+Glekko = Global + Pekko
 
-Glokka is a Scala library that allows you to register and lookup actors by names
-in an Akka cluster. See:
+Glekko is a Scala library that allows you to register and lookup actors by names
+in a Pekko cluster. See:
 
 * `Erlang's "global" module <http://erlang.org/doc/man/global.html>`_
-* `Akka's cluster feature <https://doc.akka.io/docs/akka/current/cluster-usage.html>`_
+* `Pekko's cluster feature <https://pekko.apache.org/docs/pekko/current/cluster-usage.html>`_
 
-Glokka is used in `Xitrum <http://xitrum-framework.github.io/>`_ to implement
+Glekko is used in `Xitrum <http://xitrum-framework.github.io/>`_ to implement
 its distributed `SockJS <https://github.com/sockjs/sockjs-client>`_ feature.
 
-See `Glokka's Scaladoc <http://xitrum-framework.github.io/glokka>`_.
+See `Glekko's Scaladoc <http://xitrum-framework.github.io/glekko>`_.
 
 SBT
 ---
 
 ::
 
-  libraryDependencies += "tv.cntt" %% "glokka" % "2.6.1"
+  libraryDependencies += "tv.cntt" %% "glekko" % "1.0.0"
 
 Create registry
 ---------------
 
 ::
 
-  import akka.actor.ActorSystem
-  import glokka.Registry
+  import org.apache.pekko.actor.ActorSystem
+  import glekko.Registry
 
   val system    = ActorSystem("MyClusterSystem")
   val proxyName = "my proxy name"
@@ -134,12 +134,12 @@ If you don't want to lookup and keep the actor reference:
 Cluster
 -------
 
-Glokka can run in Akka non-cluster mode (local or remote). While developing, you
-can run Akka in local mode, then later config Akka to run in cluster mode.
+Glekko can run in Pekko non-cluster mode (local or remote). While developing, you
+can run Pekko in local mode, then later config Pekko to run in cluster mode.
 
-In cluster mode, Glokka uses
-`Akka's Cluster Singleton Pattern <https://doc.akka.io/docs/akka/current/cluster-singleton.html>`_
+In cluster mode, Glekko uses
+`Pekko's Cluster Singleton Pattern <https://pekko.apache.org/docs/pekko/current/cluster-singleton.html>`_
 to maintain an actor that stores the name -> actorRef lookup table.
 
-Akka config file for a node should look like ``config_example/application.conf``
+Pekko config file for a node should look like ``config_example/application.conf``
 (note ``MyClusterSystem`` in the source code example above and in the config file).

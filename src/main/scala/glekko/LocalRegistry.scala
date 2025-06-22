@@ -1,7 +1,7 @@
-package glokka
+package glekko
 
 import scala.collection.mutable.{HashMap => MHashMap, Set => MSet}
-import akka.actor.{Actor, ActorRef, Props, Terminated}
+import org.apache.pekko.actor.{Actor, ActorRef, Props, Terminated}
 
 private class LocalRegistry extends Actor {
   import Registry._

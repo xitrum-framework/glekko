@@ -20,7 +20,7 @@ To delete the local publish:
 
 ::
 
-  $ find ~/.ivy2 -name *glokka* -delete
+  $ find ~/.ivy2 -name *glekko* -delete
 
 Publish to Sonatype
 -------------------

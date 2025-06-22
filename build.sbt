@@ -1,6 +1,6 @@
 organization := "tv.cntt"
-name         := "glokka"
-version      := "3.0.0-SNAPSHOT"
+name         := "glekko"
+version      := "1.0.0-SNAPSHOT"
 
 //------------------------------------------------------------------------------
 
@@ -11,9 +11,9 @@ scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 
 //------------------------------------------------------------------------------
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor"         % "2.8.8"
-libraryDependencies += "com.typesafe.akka" %% "akka-cluster"       % "2.8.8"
-libraryDependencies += "com.typesafe.akka" %% "akka-cluster-tools" % "2.8.8"
+libraryDependencies += "org.apache.pekko" %% "pekko-actor"         % "1.1.3"
+libraryDependencies += "org.apache.pekko" %% "pekko-cluster"       % "1.1.3"
+libraryDependencies += "org.apache.pekko" %% "pekko-cluster-tools" % "1.1.3"
 
 libraryDependencies += "org.specs2" %% "specs2-core" % "5.6.3" % "test"
 
